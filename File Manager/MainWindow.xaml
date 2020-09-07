@@ -34,6 +34,9 @@
         <CommandBinding x:Name="RecursiveDeleteCommand" Command="{StaticResource RecursiveDeleteCommand}" Executed="RecursiveDeleteCommand_Executed" ></CommandBinding>
         <CommandBinding x:Name="RefreshCommand" Command="{StaticResource RefreshCommand}" Executed="RefreshCommand_Executed" ></CommandBinding>
         <CommandBinding x:Name="BatchGenerateCommand" Command="{StaticResource BatchGenerateCommand}" Executed="BatchGenerateCommand_Executed" ></CommandBinding>
+        <CommandBinding x:Name="RemoveFileNameTextCommand" Command="{StaticResource RemoveFileNameTextCommand}" Executed="RemoveFileNameTextCommand_Executed" ></CommandBinding>
+        <CommandBinding x:Name="RemoveFolderNameTextCommand" Command="{StaticResource RemoveFolderNameTextCommand}" Executed="RemoveFolderNameTextCommand_Executed" ></CommandBinding>
+        <CommandBinding x:Name="RemoveAllNameTextCommand" Command="{StaticResource RemoveAllNameTextCommand}" Executed="RemoveAllNameTextCommand_Executed" ></CommandBinding>
     </r:RibbonWindow.CommandBindings>
     <Grid Name="MainLayout" DataContext="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=Window, AncestorLevel=1}}">
         <Grid.Resources>
@@ -179,6 +182,28 @@
                     <r:RibbonButton Label="Recursive Modify" Command="{StaticResource RecursiveModifyCommand}" LargeImageSource="/File Manager;component/images/Recursive.png" SmallImageSource="/File Manager;component/images/Recursive_16x16.png" ToolTipTitle="Recursive Modify" />
                     <r:RibbonButton Label="Recursive Delete" Command="{StaticResource RecursiveDeleteCommand}" LargeImageSource="/File Manager;component/images/Delete.png" SmallImageSource="/File Manager;component/images/Delete_16x16.png" ToolTipTitle="Recursive Delete" />
                     <r:RibbonButton Label="Batch Generate" Command="{StaticResource BatchGenerateCommand}" LargeImageSource="/File Manager;component/images/Copy.png" SmallImageSource="/File Manager;component/images/Copy_16x16.png" ToolTipTitle="Batch Generate" />
+                </r:RibbonGroup>
+                <r:RibbonGroup Header ="Recursive Remove">
+                    <r:RibbonSplitButton Label="File Name" Command="{StaticResource RemoveFileNameTextCommand}" LargeImageSource="/File Manager;component/images/RemoveProperty.png" SmallImageSource="/File Manager;component/images/RemoveProperty_16x16.png" ToolTipTitle="Rename File" ToolTipDescription="{StaticResource RenameFileTip}">
+                        <r:RibbonSplitButton.Items>
+                            <r:RibbonButton Label="Folder Name" Command="{StaticResource RemoveFolderNameTextCommand}" LargeImageSource="/File Manager;component/images/RemoveProperty.png" SmallImageSource="/File Manager;component/images/RemoveProperty_16x16.png" ToolTipTitle="Rename Folder" ToolTipDescription="{StaticResource RenameFolderTip}"></r:RibbonButton>
+                            <r:RibbonButton Label="All" Command="{StaticResource RemoveAllNameTextCommand}" LargeImageSource="/File Manager;component/images/RemoveProperty.png" SmallImageSource="/File Manager;component/images/RemoveProperty_16x16.png" ToolTipTitle="Rename All" ToolTipDescription="{StaticResource RenameAllTip}"></r:RibbonButton>
+                        </r:RibbonSplitButton.Items>
+                    </r:RibbonSplitButton>
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="32"/>
+                            <RowDefinition Height="32"/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="100"/>
+                        </Grid.ColumnDefinitions>
+                        <Label Grid.Row="0" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="3">Remove:</Label>
+                        <TextBox x:Name="RemoveTextBox" Grid.Row="0" Grid.Column="1" VerticalAlignment="Center" />
+                        <Label Grid.Row="1" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="3">Replace:</Label>
+                        <TextBox x:Name="ReplaceTextBox" Grid.Row="1" Grid.Column="1" VerticalAlignment="Center" />
+                    </Grid>
                 </r:RibbonGroup>
             </r:RibbonTab>
         </r:Ribbon>

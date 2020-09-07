@@ -743,6 +743,108 @@ namespace File_Manager
         }
         #endregion
 
+        #region Remove Name Text
+        private void RemoveFileNameTextCommand_Executed(object sender, ExecutedRoutedEventArgs e)
+        {
+            RemoveFileNameText();
+        }
+
+        private void RemoveFolderNameTextCommand_Executed(object sender, ExecutedRoutedEventArgs e)
+        {
+            RemoveFolderNameText();
+        }
+
+        private void RemoveAllNameTextCommand_Executed(object sender, ExecutedRoutedEventArgs e)
+        {
+            RemoveFileNameText();
+            RemoveFolderNameText();
+        }
+
+        private void RemoveFileNameText()
+        {
+            string removeText = RemoveTextBox.Text;
+            if (RemoveTextBox.Text == "")
+            {
+                return;
+            }
+            DirectoryInfo curDir = new DirectoryInfo(PathBox.Text);
+            RecursiveRemoveFileText(removeText, curDir);
+            UpdateFileList(PathBox.Text);
+        }
+
+        private void RecursiveRemoveFileText(string removeText, DirectoryInfo currentDirectoryInfo)
+        {
+            var directories = currentDirectoryInfo.GetDirectories();
+            foreach (var curItem in directories)
+            {
+                RecursiveRemoveFileText(removeText, curItem);
+            }
+
+            var files = currentDirectoryInfo.GetFiles();
+            foreach (var curFile in files)
+            {
+                string oldPath = curFile.FullName;
+                string newPath = curFile.Name.Replace(removeText, "").Trim();
+                if (!IsFileNameLegal(newPath))
+                {
+                    continue;
+                }
+                File.Move(oldPath, curFile.DirectoryName+ @"\" + newPath);
+            }
+        }
+
+        bool IsFileNameLegal(string name)
+        {
+            if (name.Length < 1)
+            {
+                return false;
+            }
+
+            int pos = name.LastIndexOf('.', 0);
+            if (pos == 0 || pos == name.Length -1)
+            {
+                return false;
+            }
+            return true;
+        }
+
+        private void RemoveFolderNameText()
+        {
+            string removeText = RemoveTextBox.Text;
+            if (RemoveTextBox.Text == "")
+            {
+                return;
+            }
+            DirectoryInfo curDir = new DirectoryInfo(PathBox.Text);
+            RecursiveRemoveFolderText(removeText, curDir);
+            UpdateFileList(PathBox.Text);
+        }
+
+        private void RecursiveRemoveFolderText(string removeText, DirectoryInfo currentDirectoryInfo)
+        {
+            var directories = currentDirectoryInfo.GetDirectories();
+            foreach (var curItem in directories)
+            {
+                RecursiveRemoveFolderText(removeText, curItem);
+                string oldPath = curItem.FullName;
+                string newPath = curItem.Name.Replace(removeText, "").Trim();
+                if (newPath.Length < 1 || (curItem.Parent.FullName + @"\" + newPath) == oldPath)
+                {
+                    continue;
+                }
+
+                try
+                {
+                    Directory.Move(oldPath, curItem.Parent.FullName + @"\" + newPath);
+                }
+                catch (Exception e)
+                {
+                    throw;
+                }
+            }
+        }
+        #endregion
+
 
     }
 }

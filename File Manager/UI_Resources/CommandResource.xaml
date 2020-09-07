@@ -25,4 +25,7 @@
     <RoutedUICommand x:Key="RecursiveModifyCommand" Text="RecursiveModify" />
     <RoutedUICommand x:Key="RecursiveDeleteCommand" Text="RecursiveDelete" />
     <RoutedUICommand x:Key="BatchGenerateCommand" Text="BatchGenerate" />
+    <RoutedUICommand x:Key="RemoveFileNameTextCommand" Text="RemoveFileNameText" />
+    <RoutedUICommand x:Key="RemoveFolderNameTextCommand" Text="RemoveFolderNameText" />
+    <RoutedUICommand x:Key="RemoveAllNameTextCommand" Text="RemoveAllNameText" />
 </ResourceDictionary>
